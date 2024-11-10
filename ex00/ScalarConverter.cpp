@@ -6,40 +6,90 @@
 /*   By: vvaalant <vvaalant@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 00:26:19 by vvaalant          #+#    #+#             */
-/*   Updated: 2024/11/10 01:23:42 by vvaalant         ###   ########.fr       */
+/*   Updated: 2024/11/10 02:30:05 by vvaalant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 
-ScalarConverter::ScalarConverter() {}
+static bool isValid(std::string const & str)
+{
+	if (str.empty())
+		return false;
 
-ScalarConverter::ScalarConverter(ScalarConverter const & src) {
-	*this = src;
-}
+	if (str == "nan" || str == "nanf" || str == "+inf" || str == "+inff" ||
+			str == "-inf" || str == "-inff" || str == "inf" || str == "inff")
+		return true;
 
-ScalarConverter::~ScalarConverter() {}
+	if (str.length() == 1 && std::isprint(str[0]) && !std::isdigit(str[0]))
+		return true;
 
-ScalarConverter & ScalarConverter::operator=(ScalarConverter const &other) {
-	(void)other;
-	return *this;
+	bool	hasDecimal = false;
+	bool	hasFloat = false;
+	bool	hasSign = (str[0] == '-' || str[0] == '+');
+
+	for (size_t i = hasSign ? 1 : 0; i < str.length(); i++)
+	{
+		char c = str[i];
+		if (std::isdigit(c))
+			continue;
+		if (c == '.' && !hasDecimal)
+		{
+			hasDecimal = true;
+			continue;
+		}
+		if (c == 'f' && !hasFloat && i == str.length() - 1)
+		{
+			hasFloat = true;
+			continue;
+		}
+		return false;
+	}
+	return true;
 }
 
 void	ScalarConverter::convert(std::string const & str)
 {
-	int dot = 0;
-	for (size_t i = 0; i < str.length(); i++)
+	if (isValid(str) == false)
 	{
-		if (str[i] == '.')
-			dot++;
-		if (i + 1 == str.length() && dot == 1)
-			break;
-		if (dot > 1)
-		{
-			std::cout << "impossible conversion!" << std::endl;
-			return;
-		}
+		std::cout << "impossible conversion!" << std::endl;
+		return;
 	}
+
+	if (str.length() == 1 && std::isprint(str[0]) && !std::isdigit(str[0]))
+	{
+		std::cout << "char: '" << str[0] << "'" << std::endl;
+		std::cout << "int: " << static_cast<int>(str[0]) << std::endl;
+		std::cout << "float: " << static_cast<float>(str[0]) << "f" << std::endl;
+		std::cout << "double: " << static_cast<double>(str[0]) << std::endl;
+		return;
+	}
+
+	if (str == "nan" || str == "nanf")
+	{
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: nanf" << std::endl;
+		std::cout << "double: nan" << std::endl;
+		return;
+	}
+	if (str == "+inf" || str == "+inff" || str == "inf" || str == "inff")
+	{
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: inff" << std::endl;
+		std::cout << "double: inf" << std::endl;
+		return;
+	}
+	if (str == "-inf" || str == "-inff")
+	{
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: -inff" << std::endl;
+		std::cout << "double: -inf" << std::endl;
+		return;
+	}
+
 	std::cout << "char: ";
 	try
 	{
