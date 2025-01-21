@@ -1,5 +1,5 @@
-NAME = ScalarConverter
-SRC = main.cpp ScalarConverter.cpp
+NAME = Serialization
+SRC = main.cpp serialization.cpp
 OBJ = $(SRC:.cpp=.o)
 COMPILER = c++
 FLAGS = -Wall -Wextra -Werror
