@@ -60,5 +60,5 @@ int main()
             std::cout << "Number: " << deserializedData->number << std::endl;
             std::cout << "Text: " << deserializedData->text << std::endl;
         }
-    }   
+    }
 }

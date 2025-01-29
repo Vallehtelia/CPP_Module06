@@ -4,13 +4,13 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <typeinfo>
 
-class Base {
-    public:
-        virtual ~Base();
+class Base
+{
+	public:
+		virtual ~Base();
 };
 
-Base    *generate(void);
-void    identify(Base* p);
-void    identify(Base& p);
+Base	*generate(void);
+void	identify(Base* p);
+void	identify(Base& p);

@@ -27,6 +27,10 @@ int main() {
     identify(obj);
     identify(*obj);
 
+	Base* nullObj = nullptr;
+	identify(nullObj);
+	identify(*nullObj);
+
     delete obj;
     return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: vvaalant <vvaalant@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 00:26:17 by vvaalant          #+#    #+#             */
-/*   Updated: 2024/11/10 01:36:22 by vvaalant         ###   ########.fr       */
+/*   Updated: 2025/01/29 14:32:01 by vvaalant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class ScalarConverter
 		ScalarConverter() {};
         ScalarConverter(ScalarConverter const &) = delete;
         ScalarConverter &operator=(ScalarConverter const &) = delete;
+		~ScalarConverter() = default;
 	public:
 		static void convert(std::string const & str);
 };
